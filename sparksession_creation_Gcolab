@@ -1,0 +1,33 @@
+#updating the apt get repository
+!apt-get update
+
+#installing Java
+!apt-get install openjdk-8-jdk-headless -qq > /dev/null
+
+# Downloading spark from hadoop website, Wget is a free GNU command-line utility tool used to download files from the internet
+!wget -q http://archive.apache.org/dist/spark/spark-2.3.1/spark-2.3.1-bin-hadoop2.7.tgz
+
+# Unzipping the zip file
+!tar xf spark-2.3.1-bin-hadoop2.7.tgz
+
+# installing the findspark
+!pip install -q findspark
+
+# OS module in Python provides functions for creating and removing a directory (folder), fetching its contents, changing and identifying the current directory
+import os
+
+# Setting Java and Hadoop-Spark path for environment variables
+os.environ["JAVA_HOME"] = "/usr/lib/jvm/java-8-openjdk-amd64"
+os.environ["SPARK_HOME"] = "/content/spark-2.3.1-bin-hadoop2.7"
+
+!ls
+
+# Importing findspark
+import findspark
+
+# initiating findspark
+findspark.init()
+
+import pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.getOrCreate() 
